@@ -56,5 +56,7 @@ public void TakeDamage(object[] args)
 }
 ```
 
+To use the `AddCommand` manually, it is necessary to use the object array, but don't worry, you can convert it to int, string, float, vector2, and vector3 through an extension that is already in the project, as in the example above." 
+
 
 Thank you for using uTerminal :)
