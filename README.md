@@ -24,12 +24,12 @@ The uTerminal attribute can be either static (public or non-public) or non-stati
  [uTerminal("damage", "inflict damage on the player")]
  public void TakeDamage(int damage)
  {
-	 Health -= damage;
+    Health -= damage;
  
-	if (Health <= 0)
-	{
-		Die();
-	}
+    if (Health <= 0)
+    {
+        Die();
+    }
 }
 ``` 
  
