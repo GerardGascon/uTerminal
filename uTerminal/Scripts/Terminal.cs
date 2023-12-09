@@ -129,7 +129,7 @@ public static class Terminal
         if (context.StartsWith(ConsoleSettings.Instance.chatCommandPrefix))
         {
             TryExecuteCommand(context.Replace(ConsoleSettings.Instance.chatCommandPrefix, ""));
-            return false;
+            return true;
         }
 
         return false;
