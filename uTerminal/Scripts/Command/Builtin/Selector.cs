@@ -17,7 +17,7 @@ namespace uTerminal
         }
 
         #region BuiltinCommands
-        [uTerminal("select")]
+        [uCommand("select")]
         public static void Select(int index)
         {  
             if (Objects == null)

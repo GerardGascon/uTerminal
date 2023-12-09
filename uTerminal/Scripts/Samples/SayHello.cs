@@ -2,7 +2,7 @@
 {
     public static class SayHello
     {
-        [uTerminal("hello", "say hello world exemple")]
+        [uCommand("hello", "say hello world exemple")]
         public static void Say()
         {
             Console.Log("Hello, world!");

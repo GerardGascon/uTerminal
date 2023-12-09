@@ -5,6 +5,7 @@ using System.Reflection;
 using uTerminal;
 using UnityEngine;
 using Console = uTerminal.Console;
+using Unity.VisualScripting;
 
 public static class Terminal
 {
@@ -24,18 +25,26 @@ public static class Terminal
 
         foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
         {
-            var methods = type.GetMethods(flags).Where(m => Attribute.IsDefined(m, typeof(uTerminalAttribute)));
+            var methods = type.GetMethods(flags).Where(m => Attribute.IsDefined(m, typeof(uCommandAttribute)));
 
             foreach (var method in methods)
             {
-                var attribute = Attribute.GetCustomAttribute(method, typeof(uTerminalAttribute)) as uTerminalAttribute;
+                var attribute = Attribute.GetCustomAttribute(method, typeof(uCommandAttribute)) as uCommandAttribute;
 
+                string path = "";
                 string tempName = attribute.name.Trim().Split(' ')[0];
 
-                string path = (type.Namespace + "." + tempName).ToLower();
+                if (ConsoleSettings.Instance.useNamespace)
+                {
+                    path = (type.Namespace + "." + tempName).ToLower();
 
-                if (string.IsNullOrEmpty(type.Namespace))
-                    path = (type.Name + "." + tempName).ToLower();
+                    if (string.IsNullOrEmpty(type.Namespace))
+                        path = (type.Name + "." + tempName).ToLower();
+                }
+                else
+                {
+                    path = tempName;
+                }
 
                 if (!_commands.ContainsKey(path))
                 {
@@ -66,6 +75,7 @@ public static class Terminal
 
         if (ConsoleSettings.Instance.showStartMessage)
             Console.Log(ConsoleSettings.Instance.startMessage + ConsoleSettings.Version, Console.Color.Blue);
+
         if (ConsoleSettings.Instance.showVersion)
             Console.Log("Version " + ConsoleSettings.Version);
     }
@@ -86,25 +96,42 @@ public static class Terminal
         }
     }
 
-    public static void ExecuteCommand(string context)
+    private static void TryExecuteCommand(string context)
     {
         Console.Log("> " + context, Console.Color.Blue);
-        var commands = context.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        string currentContext = commands[0];
-        commands.RemoveAt(0);
 
-        if (!_commands.ContainsKey(currentContext))
-            Console.Log("The command \"" + context + "\" was not found");
-        else
-        {
-            _commands[currentContext].context.Execute(commands.ToArray());
-        }
         try
         {
+            var commands = context.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            string currentContext = commands[0];
+            commands.RemoveAt(0);
+
+            if (!_commands.ContainsKey(currentContext))
+                Console.Log("The command \"" + context + "\" was not found");
+            else
+            {
+                _commands[currentContext].context.Execute(commands.ToArray());
+            }
         }
         catch (Exception e)
         {
             Console.Log(e.Message, Console.Color.Red);
         }
+    }
+
+    public static void ExecuteCommand(string context)
+    {
+        TryExecuteCommand(context);
+    }
+
+    public static bool ChatExecuteCommand(string context)
+    {
+        if (context.StartsWith(ConsoleSettings.Instance.chatCommandPrefix))
+        {
+            TryExecuteCommand(context);
+            return false;
+        }
+
+        return false;
     }
 }

@@ -25,8 +25,10 @@ namespace uTerminal
             }
         }
 
-        public bool showStartMessage;
-        public bool showVersion; 
-        public string startMessage; 
+        public bool useNamespace = true;
+        public bool showStartMessage = true;
+        public bool showVersion = true; 
+        public string startMessage;
+        public string chatCommandPrefix = "/";  
     }
 }
