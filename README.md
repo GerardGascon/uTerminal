@@ -1,10 +1,10 @@
-# uCommand: A Streamlined In-Game Console for Unity
+# uTerminal: A Streamlined In-Game Console for Unity
 
-uCommand is a sophisticated and highly efficient in-game console specifically designed for invoking C# methods and displaying output from the Unity Debug class during game runtime.
+uTerminal is a sophisticated and highly efficient in-game console specifically designed for invoking C# methods and displaying output from the Unity Debug class during game runtime.
 
 ## Usage
 
-1. Copy the contents of [uCommand](./uCommand) to your Unity project Assets folder.
+1. Copy the contents of [uTerminal](./uTerminal) to your Unity project Assets folder.
 
 2. Call the initialization method in your C# code:
 ```csharp
@@ -16,11 +16,11 @@ Type `uterminal.help` in the console to view a list of all available commands. U
 
 There are 2 options to register commands to be used in the uTerminal.
 
-### 1. Using the uCommand attribute:
+### 1. Using the uTerminal attribute:
 The uTerminal attribute can be either static (public or non-public) or non-static (public or non-public). This means it is compatible with both static and non-static methods. However, please note that, currently, it is not available for objects of type ScriptableObject.
 
 ```csharp
- [uCommand("damage", "inflict damage on the player")]
+ [uTerminal("damage", "inflict damage on the player")]
  public void TakeDamage(int damage)
  {
 	 Health -= damage;
