@@ -38,7 +38,7 @@ The uTerminal attribute can be either static (public or non-public) or non-stati
 `AddCommand` can be used as static (public or non-public) or non-static (public or non-public). This means it supports static and non-static methods and ScriptableObject.
  
 ```csharp
-void Start()
+private void Start()
 { 
     Terminal.AddCommand("damage", "AlotofDamage", "inflict damage on the player", TakeDamage);
 }
