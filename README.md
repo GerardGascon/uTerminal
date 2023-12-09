@@ -8,9 +8,11 @@ uTerminal is a sophisticated and highly efficient in-game console specifically d
 
 2. Call the initialization method in your C# code:
 ```csharp
-uTerminal.ConsoleManager.Instance.Initialize();
+uTerminal.ConsoleManager.Instance.Initialize(true);
 ```
 Type `uterminal.help` in the console to view a list of all available commands. Utilize the up and down arrow keys to navigate through the command history, and employ the tab key for command autocompletion
+
+3. Press F1 to open console UI
 
 ## Registering Commands
 
