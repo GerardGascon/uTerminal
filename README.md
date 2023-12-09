@@ -40,7 +40,7 @@ The uTerminal attribute can be either static (public or non-public) or non-stati
 ```csharp
 private void Start()
 { 
-    Terminal.AddCommand("damage", "AlotofDamage", "inflict damage on the player", TakeDamage);
+    Terminal.AddCommand("damage", "player.damage", "inflict damage on the player", TakeDamage);
 }
 
 public void TakeDamage(object[] args)
