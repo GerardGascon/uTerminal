@@ -150,23 +150,16 @@ namespace uTerminal.UI
             if (_texts == null) _texts = new List<ConsoleText>();
             ConsoleText temp = null;
 
-            if (!string.IsNullOrEmpty(stackTrace))
-            {
-                string key = StackTraceHash(stackTrace);
+            string key = StackTraceHash(stackTrace);
 
+            if (!string.IsNullOrEmpty(stackTrace))
+            { 
                 if (_collapseTexts.ContainsKey(key))
                 {
                     if (_collapseTexts[key])
-                    {
-                        _collapseTexts[key].count++;
-                        _collapseTexts[key].counter.text = _collapseTexts[key].count.ToString();
-                        _collapseTexts[key].counter.transform.parent.gameObject.SetActive(true);
                         temp = _collapseTexts[key];
-                    }
                     else
-                    {
                         _collapseTexts.Remove(key);
-                    }
                 }
             }
 
@@ -175,9 +168,7 @@ namespace uTerminal.UI
                 temp = Instantiate(textPrefab);
 
                 if (!string.IsNullOrEmpty(stackTrace))
-                {
-                    string key = StackTraceHash(stackTrace);
-
+                { 
                     if (!_collapseTexts.ContainsKey(key))
                     {
                         _collapseTexts.Add(key, temp);
@@ -198,6 +189,13 @@ namespace uTerminal.UI
                 });
             }
 
+            if (!string.IsNullOrEmpty(stackTrace))
+            {
+                _collapseTexts[key].count++;
+                _collapseTexts[key].counter.text = _collapseTexts[key].count.ToString();
+                _collapseTexts[key].counter.transform.parent.gameObject.SetActive(true);
+            }
+             
             temp.transform.SetParent(contentParent, false);
             string text = "[" + DateTime.Now.ToString("HH:mm:ss") + "] ";
             string completeText = text + textToProcess;
