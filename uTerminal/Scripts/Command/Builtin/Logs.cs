@@ -8,13 +8,13 @@ namespace uTerminal.Logs
         [uCommand("show", "Show unity console logs in runtime")] 
         public static void ShowLogs()
         {
-            UIManager.ShowUnityLogs = true;
+            uTerminal.UI.UIManager.ShowUnityLogs = true;
         } 
 
         [uCommand("hide", "Hide unity console logs in runtime")]
         public static void HideLogs()
-        {
-            UIManager.ShowUnityLogs = false;
+        { 
+            uTerminal.UI.UIManager.ShowUnityLogs = false;
         }
         #endregion
     }

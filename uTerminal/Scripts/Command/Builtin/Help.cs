@@ -8,7 +8,7 @@ namespace uTerminal
         {
             foreach (var item in Terminal.allCommands)
             {
-                Console.Log(" - <b>" + item.name + ", path: " + item.path + "</b>, " + item.description);
+                Console.Log($" <color=#FFA800>- <b> {item.path}</color></b>, {item.description}");
             }
         }
         #endregion

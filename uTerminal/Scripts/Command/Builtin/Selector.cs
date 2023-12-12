@@ -17,7 +17,7 @@ namespace uTerminal
         }
 
         #region BuiltinCommands
-        [uCommand("select")]
+        [uCommand("select", "Selector of the multiple behaviour")]
         public static void Select(int index)
         {  
             if (Objects == null)

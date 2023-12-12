@@ -4,8 +4,7 @@ using System.Linq;
 using System.Reflection;
 using uTerminal;
 using UnityEngine;
-using Console = uTerminal.Console;
-using Unity.VisualScripting;
+using Console = uTerminal.Console; 
 
 public static class Terminal
 {
@@ -48,7 +47,7 @@ public static class Terminal
 
                 if (!_commands.ContainsKey(path))
                 {
-                    CommandInfor commandInfo = new CommandInfor(path, attribute.name, attribute.description);
+                    CommandInfor commandInfo = new CommandInfor(path, attribute.description);
                     Context context = new Context(method);
 
                     _commands.Add(path, new TerminalCommand(commandInfo, context));
@@ -74,19 +73,19 @@ public static class Terminal
         }
 
         if (ConsoleSettings.Instance.showStartMessage)
-            Console.Log(ConsoleSettings.Instance.startMessage + ConsoleSettings.Version, Console.Color.Blue);
+            Console.Log(ConsoleSettings.Instance.startMessage, Console.Color.Blue);
 
         if (ConsoleSettings.Instance.showVersion)
-            Console.Log("Version " + ConsoleSettings.Version);
+            Console.Log($"uTerminal v{ConsoleSettings.Version}");
     }
 
-    public static void AddCommand(string name, string path, string description, Action<object[]> method)
+    public static void AddCommand(string path, string description, Action<object[]> method)
     {
         if (_commands.ContainsKey(path))
             Debug.LogError($"The path '{path}' already contains in the list of commands");
         else
         {
-            CommandInfor commandInfo = new CommandInfor(path, name, description);
+            CommandInfor commandInfo = new CommandInfor(path, description);
             Context context = new Context(method);
 
             TerminalCommand command = new TerminalCommand(commandInfo, context);

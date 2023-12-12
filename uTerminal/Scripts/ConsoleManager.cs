@@ -1,15 +1,16 @@
 using uTerminal.UI;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace uTerminal
 {
     public class ConsoleManager : MonoBehaviour
     {
-        private UIManager _consoleUI; 
-         
+        private GameObject _consoleUI;
+
         private static ConsoleManager _instance;
 
-        public static ConsoleManager Instance
+        private static ConsoleManager Instance
         {
             get
             {
@@ -23,20 +24,32 @@ namespace uTerminal
             }
         }
 
-        private void InitializeGraphics()
+        private static void InitializeGraphics()
         {
-            if (!_consoleUI)
+            if (Instance._consoleUI == null)
             {
-                _consoleUI = Instantiate(Resources.Load<GameObject>("CanvasConsoleBehaviour")).GetComponent<UIManager>();  
-                DontDestroyOnLoad(gameObject);
+                Instance._consoleUI = Instantiate(Resources.Load<GameObject>("CanvasConsoleBehaviour"));
+                DontDestroyOnLoad(Instance._consoleUI);
             }
         }
 
-        public void Initialize(bool initializeGUI = false)
+        public static void Initialize(bool initializeGUI = false)
         {
-            if (initializeGUI) InitializeGraphics();
+            if (initializeGUI)
+            {
+                InitializeGraphics();
+                Console.Init(Instance._consoleUI.GetComponent<uTerminal.UI.UIManager>());
+            }
 
             Terminal.Initialize();
-        } 
+        }
+
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F1) && _consoleUI)
+            {
+                _consoleUI.SetActive(!_consoleUI.activeSelf);
+            }
+        }
     }
 }

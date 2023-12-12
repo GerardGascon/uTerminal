@@ -16,7 +16,7 @@ namespace uTerminal
         [SerializeField] AutoCompleteText _suggestionPrefab;
 
         private List<AutoCompleteText> _suggestions;
-        private UIManager _uiManager;
+        private uTerminal.UI.UIManager _uiManager;
         private bool _haveSuggestion = false;
         private string _currentSuggestion = "";
 
@@ -24,7 +24,7 @@ namespace uTerminal
         private void Start()
         {
             _suggestions = new List<AutoCompleteText>();
-            _uiManager = GetComponent<UIManager>();
+            _uiManager = GetComponent<uTerminal.UI.UIManager>();
 
             _uiManager.inputCommand.onValueChanged.AddListener(AutoCompleteCheck);
 
@@ -34,12 +34,12 @@ namespace uTerminal
         private void Update()
         {
             if (_haveSuggestion && Input.GetKeyDown(KeyCode.Tab))
-            { 
-                StartCoroutine(_uiManager.SetCurretSuggestion(_currentSuggestion)); 
+            {
+                StartCoroutine(_uiManager.SetCurretSuggestion(_currentSuggestion));
                 ClearAutoComplete();
             }
         }
-           
+
         public void AutoCompleteCheck(string input)
         {
             if (string.IsNullOrEmpty(input))

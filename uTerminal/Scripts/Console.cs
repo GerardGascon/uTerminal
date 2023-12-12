@@ -10,15 +10,19 @@ namespace uTerminal
             Blue, Green, White, Orange, Red
         }
 
-        private static UIManager _ui;
+        private static uTerminal.UI.UIManager _ui;
         public static void Log(string log)
         {
             Log(log, false, "");
         }
 
-        public static void Log(string log, bool showDataTime, string stackTrace)
+        public static void Init(uTerminal.UI.UIManager uIManager)
         {
-            if (_ui == null) _ui = GameObject.FindObjectOfType<UIManager>();
+            _ui = uIManager;
+        } 
+          
+        public static void Log(string log, bool showDataTime, string stackTrace)
+        { 
             if (_ui) _ui.ProcessText(log, showDataTime, stackTrace);  
         }
 

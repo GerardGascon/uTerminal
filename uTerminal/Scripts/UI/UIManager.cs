@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI; 
 
 namespace uTerminal.UI
 {
@@ -14,8 +13,7 @@ namespace uTerminal.UI
         [SerializeField] Transform contentParent;
         [SerializeField] ConsoleText textPrefab;
         [SerializeField] ScrollRect scrollRect;
-        [SerializeField] ClickDetection clickDetection;
-        [SerializeField] GameObject panel;
+        [SerializeField] ClickDetection clickDetection; 
         [SerializeField] ConsoleTextOptions textOptions;
         public TMP_InputField inputCommand;
 
@@ -52,12 +50,7 @@ namespace uTerminal.UI
         }
 
         private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                panel.SetActive(!panel.activeSelf);
-            }
-
+        {  
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 if (!string.IsNullOrEmpty(inputCommand.text))
@@ -212,6 +205,12 @@ namespace uTerminal.UI
 
             _texts.Add(temp);
 
+            scrollRect.enabled = false;
+            Invoke("UpdateScrollRect", 0.1f);
+        }
+
+        private void OnEnable() 
+        {
             scrollRect.enabled = false;
             Invoke("UpdateScrollRect", 0.1f);
         }
