@@ -76,7 +76,7 @@ or you can enable directly in the console using
 uterminal.logs.show
 ```
 
-### 3. Chat
+### 4. Chat
 
 You can also execute your commands directly from your game chat
 
