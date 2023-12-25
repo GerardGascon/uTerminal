@@ -4,6 +4,8 @@ uTerminal is a sophisticated and highly efficient in-game console specifically d
 
 ## Usage
 
+*For this package to work correctly you need to add TextMeshPro*
+
 1. Copy the contents of [uTerminal](./uTerminal) to your Unity project Assets folder.
 
 2. Call the initialization method in your C# code:
