@@ -63,5 +63,16 @@ Built-in support for multiple MonoBehaviours. This feature allows users to easil
 
 ![Alt text](https://i.imgur.com/pqqQd2k.gif)
 
+### 3. Unity Logs
 
+You can enable unity logs using the am code below
+
+```csharp
+uTerminalGraphics.ShowUnityLogs = false;
+```
+or you can enable directly in the console using
+
+```
+uterminal.logs.show
+```
 Thank you for using uTerminal :)
