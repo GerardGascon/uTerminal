@@ -75,4 +75,25 @@ or you can enable directly in the console using
 ```
 uterminal.logs.show
 ```
+
+### 3. Chat
+
+You can also execute your commands directly from your game chat
+
+```csharp
+void Send(string chat)
+{
+    //commands was not found
+    if(!Terminal.ChatExecuteCommand(chat))
+    {
+        //send message to other server and server send to clients
+    }
+    else
+    {
+        //command found
+    }
+}
+```
+
+
 Thank you for using uTerminal :)
