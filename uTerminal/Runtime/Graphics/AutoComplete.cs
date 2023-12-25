@@ -56,11 +56,16 @@ namespace uTerminal.Graphics
             var matchingSuggestions = Terminal.allCommands.FindAll(s => s.path.ToLower().Contains(_uiManager.inputCommand.text.ToLower().Trim()));
             var first = matchingSuggestions.FirstOrDefault();
 
-            if (matchingSuggestions.Count <= 0)
-                ShowAutoComplete(Terminal.allCommands);
+            if(_uiManager.inputCommand.text.Contains(" "))
+                ClearAutoComplete();
             else
-                ShowAutoComplete(matchingSuggestions);
-
+            {
+                if (matchingSuggestions.Count <= 0)
+                    ShowAutoComplete(Terminal.allCommands);
+                else
+                    ShowAutoComplete(matchingSuggestions);
+            }
+             
             if (first != null)
             {
                 if (_uiManager.inputCommand.text.Trim() != first.path)

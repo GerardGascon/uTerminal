@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI; 
 
 namespace uTerminal.Graphics
 {
@@ -18,7 +17,7 @@ namespace uTerminal.Graphics
         [SerializeField] ConsoleText textPrefab;
         [SerializeField] ScrollRect scrollRect;
         [SerializeField] ClickDetection clickDetection;
-        [SerializeField] ConsoleTextOptions textOptions;
+        [SerializeField] ConsoleTextOptions textOptions; 
         public TMP_InputField inputCommand;
 
         private List<ConsoleText> _texts;
@@ -55,7 +54,10 @@ namespace uTerminal.Graphics
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            inputCommand.Select();
+            inputCommand.ActivateInputField();
+
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 if (!string.IsNullOrEmpty(inputCommand.text))
                 {
@@ -79,7 +81,7 @@ namespace uTerminal.Graphics
             }
 
             if (_lastCommands.Count > 0)
-            {
+            { 
                 if (Input.GetKeyUp(KeyCode.UpArrow))
                 {
                     _current--;
@@ -240,10 +242,7 @@ namespace uTerminal.Graphics
         }
 
         private void OnEnable()
-        {
-            inputCommand.Select();
-            inputCommand.ActivateInputField();
-
+        {  
             scrollRect.enabled = false;
             Invoke("UpdateScrollRect", 0.1f);
         }

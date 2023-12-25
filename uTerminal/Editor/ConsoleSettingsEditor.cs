@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
-
+ 
 namespace uTerminal.Editor
 {
     [CustomEditor(typeof(ConsoleSettings))]
@@ -34,6 +31,10 @@ namespace uTerminal.Editor
                 GUILayout.Space(5);
                 settings.showVersion = EditorGUILayout.Toggle("Show Version", settings.showVersion);
             }
+             
+            settings.chatCommandPrefix = EditorGUILayout.TextField("Chat Command Prefix", settings.chatCommandPrefix);
+
+            settings.openTerminalKey = (KeyCode)EditorGUILayout.EnumPopup("Open Terminal Key", (KeyCode)settings.openTerminalKey);  
         }
     }
 }

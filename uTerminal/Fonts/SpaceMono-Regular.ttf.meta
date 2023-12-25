@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7accdc7064b3a574295b972d2f2bce54
+guid: 8e0d2dd2dae7078478efc6636cddaaaa
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Consolas
+  - Space Mono
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

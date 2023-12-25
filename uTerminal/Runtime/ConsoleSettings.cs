@@ -61,5 +61,10 @@ namespace uTerminal
         /// The chat command prefix.
         /// </summary>
         public string chatCommandPrefix = "/";
+
+        /// <summary>
+        /// The button to open terminal.
+        /// </summary>
+        public KeyCode openTerminalKey = KeyCode.F1;
     }
 }

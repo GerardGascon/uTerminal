@@ -30,7 +30,7 @@ namespace uTerminal
                     _instance = new GameObject("ConsoleBehaviour").AddComponent<ConsoleManager>();
                     DontDestroyOnLoad(_instance);
                 }
-
+                 
                 return _instance;
             }
         }
@@ -67,7 +67,7 @@ namespace uTerminal
         /// </summary>
         public void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F1) && _consoleUI)
+            if (Input.GetKeyDown(ConsoleSettings.Instance.openTerminalKey) && _consoleUI)
             {
                 _consoleUI.SetActive(!_consoleUI.activeSelf);
             }

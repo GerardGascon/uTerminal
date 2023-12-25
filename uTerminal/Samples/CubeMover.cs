@@ -74,6 +74,6 @@ namespace uTerminal.Samples
         private void Die()
         {
             Destroy(gameObject); // Destroy the cube when it dies
-        }
+        }  
     }
 }
