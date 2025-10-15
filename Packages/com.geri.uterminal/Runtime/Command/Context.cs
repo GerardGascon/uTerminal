@@ -11,7 +11,7 @@ namespace uTerminal
     {
         private object[] targets;
         private Action<object[]> method;
-        private ParameterInfo[] parametersInfo;
+        public ParameterInfo[] parametersInfo { private set; get; }
         private bool isManuallyMethod;
 
         /// <summary>

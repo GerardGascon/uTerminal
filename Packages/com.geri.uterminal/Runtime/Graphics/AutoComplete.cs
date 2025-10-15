@@ -53,7 +53,7 @@ namespace uTerminal.Graphics
             }
             ClearAutoComplete();
 
-            var matchingSuggestions = Terminal.AllCommands.FindAll(s => s.path.ToLower().Contains(_uiManager.inputCommand.text.ToLower().Trim()));
+            var matchingSuggestions = Terminal.AllCommands.FindAll(s => s.infor.path.ToLower().Contains(_uiManager.inputCommand.text.ToLower().Trim()));
             var first = matchingSuggestions.FirstOrDefault();
 
             if(_uiManager.inputCommand.text.Contains(" "))
@@ -68,16 +68,16 @@ namespace uTerminal.Graphics
              
             if (first != null)
             {
-                if (_uiManager.inputCommand.text.Trim() != first.path)
+                if (_uiManager.inputCommand.text.Trim() != first.infor.path)
                 {
                     string replacement = new string(' ', _uiManager.inputCommand.text.Length);
-                    string replaced = first.path.Replace(_uiManager.inputCommand.text.ToLower(), "");
+                    string replaced = first.infor.path.Replace(_uiManager.inputCommand.text.ToLower(), "");
 
-                    if (first.path.StartsWith(_uiManager.inputCommand.text))
+                    if (first.infor.path.StartsWith(_uiManager.inputCommand.text))
                         SetAutoCompleteText(replaced, replacement);
 
                     _haveSuggestion = true;
-                    _currentSuggestion = first.path;
+                    _currentSuggestion = first.infor.path;
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace uTerminal.Graphics
         /// Displays auto-completion suggestions based on the provided command information.
         /// </summary>
         /// <param name="infors">The list of command information.</param>
-        public void ShowAutoComplete(List<CommandInfo> infors)
+        public void ShowAutoComplete(List<TerminalCommand> infors)
         {
             foreach (var item in infors.Take(7).ToList())
             {
@@ -137,7 +137,7 @@ namespace uTerminal.Graphics
                     ClearAutoComplete();
                 });
 
-                temp.text.text = item.path;
+                temp.text.text = item.infor.path;
                 _suggestions.Add(temp);
             }
         }

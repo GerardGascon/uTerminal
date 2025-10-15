@@ -8,14 +8,14 @@ using Object = UnityEngine.Object;
 namespace uTerminal {
 	public static class Terminal {
 		private static Dictionary<string, TerminalCommand> _commands = new();
-		public static List<CommandInfo> AllCommands;
+		public static List<TerminalCommand> AllCommands;
 		private static bool _alreadyStarted;
 
 		/// <summary>
 		/// Initializes the uTerminal.
 		/// </summary>
 		public static void Initialize() {
-			AllCommands = new List<CommandInfo>();
+			AllCommands = new List<TerminalCommand>();
 			_commands = new Dictionary<string, TerminalCommand>();
 
 			foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
@@ -58,9 +58,10 @@ namespace uTerminal {
 
 				CommandInfo commandInfo = new(path, attribute!.description);
 				Context context = new(method);
+				TerminalCommand command = new(commandInfo, context);
 
-				_commands.Add(path, new TerminalCommand(commandInfo, context));
-				AllCommands.Add(commandInfo);
+				_commands.Add(path, command);
+				AllCommands.Add(command);
 
 				if (type.IsSubclassOf(typeof(MonoBehaviour))) {
 					object[] instances = Object
@@ -95,13 +96,12 @@ namespace uTerminal {
 			if (_commands.ContainsKey(path))
 				Debug.LogError($"The path '{path}' already contains in the list of commands");
 			else {
-				CommandInfo commandInfo = new CommandInfo(path, description);
-				Context context = new Context(method);
+				CommandInfo commandInfo = new(path, description);
+				Context context = new(method);
 
-				TerminalCommand command = new TerminalCommand(commandInfo, context);
+				TerminalCommand command = new(commandInfo, context);
 				_commands.Add(path, command);
-
-				AllCommands.Add(commandInfo);
+				AllCommands.Add(command);
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace uTerminal {
 			uTerminalDebug.Log("> " + context, uTerminalDebug.Color.Blue);
 
 			try {
-				var commands = context.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+				var commands = context.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 				string currentContext = commands[0];
 				commands.RemoveAt(0);
 

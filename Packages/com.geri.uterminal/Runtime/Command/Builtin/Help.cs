@@ -1,3 +1,7 @@
+ using System;
+ using System.Linq;
+ using System.Reflection;
+
  namespace uTerminal
 {
     /// <summary>
@@ -7,15 +11,31 @@
     {
         #region BuiltinCommands
 
+        private static string GetFriendlyTypeName(Type type)
+        {
+            return type == typeof(int) ? "int"
+                : type == typeof(string) ? "string"
+                : type == typeof(bool) ? "bool"
+                : type == typeof(float) ? "float"
+                : type == typeof(double) ? "double"
+                : type == typeof(object) ? "object"
+                : type.Name;
+        }
+
         /// <summary>
         /// Displays information about all available commands with their descriptions.
         /// </summary>
         [uCommand("help", "Display all available commands with description")]
         public static void HelpCommands()
         {
-            foreach (var item in Terminal.AllCommands)
+            foreach (TerminalCommand item in Terminal.AllCommands)
             {
-                uTerminalDebug.Log($" <color=#FFA800>- <b> {item.path}</color></b>, {item.description}");
+                ParameterInfo[] paramTypes = item.context.parametersInfo;
+                string paramList = paramTypes is { Length: > 0 }
+                    ? string.Join(" ", paramTypes.Select(p => $"[{GetFriendlyTypeName(p.ParameterType)} {p.Name}]"))
+                    : "";
+                uTerminalDebug.Log(
+                    $" <color=#FFA800>- <b> {item.infor.path} {paramList}</color></b>, {item.infor.description}");
             }
         }
 
