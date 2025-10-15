@@ -30,6 +30,11 @@ namespace uTerminal {
 			}
 		}
 
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+		private static void AutoStart() {
+			Initialize(true);
+		}
+
 		/// <summary>
 		/// Initializes the graphics for the console.
 		/// </summary>
