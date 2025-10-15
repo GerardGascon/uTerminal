@@ -1,3 +1,4 @@
+using System;
 using uTerminal.Graphics;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ namespace uTerminal {
 		/// The static instance of the ConsoleManager.
 		/// </summary>
 		private static ConsoleManager _instance;
+
+		public static event Action OnConsoleOpen;
+		public static event Action OnConsoleClose;
 
 		/// <summary>
 		/// Gets the static instance of the ConsoleManager.
@@ -66,6 +70,11 @@ namespace uTerminal {
 			if (UnityEngine.InputSystem.Keyboard.current[ConsoleSettings.Instance.openTerminalKey].wasPressedThisFrame && _consoleUI)
 			{
 				_consoleUI.SetActive(!_consoleUI.activeSelf);
+				if (_consoleUI.activeSelf)
+					OnConsoleOpen?.Invoke();
+				else
+					OnConsoleClose?.Invoke();
+
 			}
 #else
 			if (Input.GetKeyDown(ConsoleSettings.Instance.openTerminalKey) && _consoleUI) {
