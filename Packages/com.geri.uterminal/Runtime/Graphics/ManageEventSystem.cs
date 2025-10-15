@@ -15,7 +15,11 @@ namespace uTerminal.Graphics
             {
                 GameObject eventSystemObject = new GameObject("EventSystem");
                 eventSystem = eventSystemObject.AddComponent<EventSystem>();
+#if ENABLE_INPUT_SYSTEM
+                eventSystemObject.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+#else
                 eventSystemObject.AddComponent<StandaloneInputModule>();
+#endif
 
                 Debug.Log("EventSystem created dynamically in the scene.");
             }

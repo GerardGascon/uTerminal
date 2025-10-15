@@ -57,7 +57,7 @@ namespace uTerminal.Graphics
             inputCommand.Select();
             inputCommand.ActivateInputField();
 
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (InputAbstraction.ReturnPressed() || InputAbstraction.EnterPressed())
             {
                 if (!string.IsNullOrEmpty(inputCommand.text))
                 {
@@ -71,7 +71,7 @@ namespace uTerminal.Graphics
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && _currentTextOptions)
+            if (InputAbstraction.MouseClicked() && _currentTextOptions)
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
@@ -82,14 +82,14 @@ namespace uTerminal.Graphics
 
             if (_lastCommands.Count > 0)
             { 
-                if (Input.GetKeyUp(KeyCode.UpArrow))
+                if (InputAbstraction.UpPressed())
                 {
                     _current--;
                     if (_current <= 0) _current = 0;
                     StartCoroutine(SetCurretSuggestion(_lastCommands[_current]));
                 }
 
-                if (Input.GetKeyUp(KeyCode.DownArrow))
+                if (InputAbstraction.DownPressed())
                 {
                     _current++;
                     if (_current >= _lastCommands.Count)
@@ -153,8 +153,7 @@ namespace uTerminal.Graphics
             });
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                parentCanvas.transform as RectTransform,
-                Input.mousePosition, parentCanvas.worldCamera,
+                parentCanvas.transform as RectTransform, InputAbstraction.GetMousePosition(), parentCanvas.worldCamera,
                 out Vector2 movePos);
 
             _currentTextOptions.transform.position = parentCanvas.transform.TransformPoint(movePos);

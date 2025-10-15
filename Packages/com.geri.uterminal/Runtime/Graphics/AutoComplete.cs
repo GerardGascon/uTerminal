@@ -33,7 +33,7 @@ namespace uTerminal.Graphics
 
         private void Update()
         {
-            if (_haveSuggestion && Input.GetKeyDown(KeyCode.Tab))
+            if (_haveSuggestion && InputAbstraction.TabPressed())
             {
                 StartCoroutine(_uiManager.SetCurretSuggestion(_currentSuggestion));
                 ClearAutoComplete();
