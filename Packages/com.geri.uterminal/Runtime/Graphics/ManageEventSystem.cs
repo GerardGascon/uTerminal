@@ -8,7 +8,7 @@ namespace uTerminal.Graphics
         void Start()
         {
             // Try to get the existing EventSystem in the scene
-            EventSystem eventSystem = FindObjectOfType<EventSystem>();
+            EventSystem eventSystem = FindAnyObjectByType<EventSystem>();
 
             // If not found, create a new one
             if (eventSystem == null)
