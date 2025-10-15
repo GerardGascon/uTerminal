@@ -1,6 +1,7 @@
 using System;
 using uTerminal.Graphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace uTerminal {
 	/// <summary>
@@ -37,6 +38,7 @@ namespace uTerminal {
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void AutoStart() {
 			Initialize(true);
+			SceneManager.activeSceneChanged += (_, _) => Initialize(true);
 		}
 
 		/// <summary>

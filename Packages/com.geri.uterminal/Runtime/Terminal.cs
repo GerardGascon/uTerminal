@@ -10,15 +10,10 @@ namespace uTerminal {
 		private static Dictionary<string, TerminalCommand> _commands = new();
 		public static List<CommandInfo> allCommands;
 
-		private static bool WasInitialized = false;
-
 		/// <summary>
 		/// Initializes the uTerminal.
 		/// </summary>
 		public static void Initialize() {
-			if (WasInitialized) return;
-
-			WasInitialized = true;
 			allCommands = new List<CommandInfo>();
 			_commands = new Dictionary<string, TerminalCommand>();
 
