@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace uTerminal
@@ -7,7 +8,8 @@ namespace uTerminal
     /// Attribute for defining uTerminal commands on methods.
     /// Allows specifying the command name, description, and associated MonoBehaviour.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
+    [MeansImplicitUse]
     public class uCommandAttribute : Attribute
     {
         /// <summary>
