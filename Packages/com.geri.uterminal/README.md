@@ -4,14 +4,7 @@ uTerminal is a sophisticated and highly efficient in-game console specifically d
 
 ## Usage
 
-1. Copy the contents of [uTerminal](./uTerminal) to your Unity project Assets folder.
-
-2. Call the initialization method in your C# code:
-```csharp
-uTerminal.ConsoleManager.Instance.Initialize(true);
-```
-3. Press F1 to open console UI Type `uterminal.help` in the console to view a list of all available commands. Utilize the up and down arrow keys to navigate through the command history, and employ the tab key for command autocompletion
-
+Press F1 to open console UI Type `uterminal.help` in the console to view a list of all available commands. Utilize the up and down arrow keys to navigate through the command history, and employ the tab key for command autocompletion
 
 ## Registering Commands
 
@@ -31,8 +24,8 @@ The uTerminal attribute can be either static (public or non-public) or non-stati
         Die();
     }
 }
-``` 
- 
+```
+
 ### 2. Manually adding Commands:
 
 `AddCommand` can be used as static (public or non-public) or non-static (public or non-public). This means it supports static and non-static methods and ScriptableObject.
@@ -59,6 +52,7 @@ public void TakeDamage(object[] args)
 To use the `AddCommand` manually, it is necessary to use the object array, but don't worry, you can convert it to int, string, float, vector2, and vector3 through an extension that is already in the project, as in the example above." 
 
 ### 3. Multiple MonoBehaviour support
+
 Built-in support for multiple MonoBehaviours. This feature allows users to easily integrate and manage different MonoBehaviour components within a single asset.
 
 ![Alt text](https://i.imgur.com/pqqQd2k.gif)
@@ -70,6 +64,7 @@ You can enable unity logs using the am code below
 ```csharp
 uTerminalGraphics.ShowUnityLogs = false;
 ```
+
 or you can enable directly in the console using
 
 ```
@@ -94,6 +89,5 @@ void Send(string chat)
     }
 }
 ```
-
 
 Thank you for using uTerminal :)
