@@ -1,0 +1,24 @@
+﻿{
+  "name": "com.geri.uterminal",
+  "version": "1.0.0",
+  "displayName": "uTerminal",
+  "description": "Unity package to create a debug terminal on the game window.",
+  "unity": "2022.3",
+  "keywords": [
+    "uTerminal",
+    "terminal",
+    "debug"
+  ],
+  "author": {
+    "name": "Geri",
+    "email": "hello@gerardgascon.com",
+    "url": "https://gerardgascon.com/"
+  },
+  "samples": [
+    {
+      "displayName": "Cube Mover",
+      "description": "A basic sample to see how it works.",
+      "path": "Samples~/CubeMover"
+    }
+  ]
+}
