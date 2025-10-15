@@ -8,18 +8,23 @@ using Object = UnityEngine.Object;
 namespace uTerminal {
 	public static class Terminal {
 		private static Dictionary<string, TerminalCommand> _commands = new();
-		public static List<CommandInfo> allCommands;
+		public static List<CommandInfo> AllCommands;
+		private static bool _alreadyStarted;
 
 		/// <summary>
 		/// Initializes the uTerminal.
 		/// </summary>
 		public static void Initialize() {
-			allCommands = new List<CommandInfo>();
+			AllCommands = new List<CommandInfo>();
 			_commands = new Dictionary<string, TerminalCommand>();
 
 			foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
 				SearchForAttributes(assembly);
 			}
+
+			if (_alreadyStarted)
+				return;
+			_alreadyStarted = true;
 
 			if (ConsoleSettings.Instance.showStartMessage)
 				uTerminalDebug.Log(ConsoleSettings.Instance.startMessage, uTerminalDebug.Color.Blue);
@@ -55,7 +60,7 @@ namespace uTerminal {
 				Context context = new(method);
 
 				_commands.Add(path, new TerminalCommand(commandInfo, context));
-				allCommands.Add(commandInfo);
+				AllCommands.Add(commandInfo);
 
 				if (type.IsSubclassOf(typeof(MonoBehaviour))) {
 					object[] instances = Object
@@ -96,7 +101,7 @@ namespace uTerminal {
 				TerminalCommand command = new TerminalCommand(commandInfo, context);
 				_commands.Add(path, command);
 
-				allCommands.Add(commandInfo);
+				AllCommands.Add(commandInfo);
 			}
 		}
 

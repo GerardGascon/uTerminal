@@ -53,7 +53,7 @@ namespace uTerminal.Graphics
             }
             ClearAutoComplete();
 
-            var matchingSuggestions = Terminal.allCommands.FindAll(s => s.path.ToLower().Contains(_uiManager.inputCommand.text.ToLower().Trim()));
+            var matchingSuggestions = Terminal.AllCommands.FindAll(s => s.path.ToLower().Contains(_uiManager.inputCommand.text.ToLower().Trim()));
             var first = matchingSuggestions.FirstOrDefault();
 
             if(_uiManager.inputCommand.text.Contains(" "))
@@ -61,7 +61,7 @@ namespace uTerminal.Graphics
             else
             {
                 if (matchingSuggestions.Count <= 0)
-                    ShowAutoComplete(Terminal.allCommands);
+                    ShowAutoComplete(Terminal.AllCommands);
                 else
                     ShowAutoComplete(matchingSuggestions);
             }
