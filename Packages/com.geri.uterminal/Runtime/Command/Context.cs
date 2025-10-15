@@ -28,7 +28,10 @@ namespace uTerminal
                 {
                     if (targets.Length > 1)
                     {
-                        uTerminalDebug.Log("Please select an item, type \"ucommand.select\" and the item number", uTerminalDebug.Color.Orange);
+                        if (ConsoleSettings.Instance.useNamespace)
+                            uTerminalDebug.Log("Please select an item, type \"uterminal.select\" and the item number", uTerminalDebug.Color.Orange);
+                        else
+                            uTerminalDebug.Log("Please select an item, type \"select\" and the item number", uTerminalDebug.Color.Orange);
                         int i = 0;
                         foreach (var item in targets)
                         {

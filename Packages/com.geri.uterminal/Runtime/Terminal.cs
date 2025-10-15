@@ -22,49 +22,8 @@ namespace uTerminal {
 			allCommands = new List<CommandInfo>();
 			_commands = new Dictionary<string, TerminalCommand>();
 
-			var flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
-
-			foreach (var type in Assembly.GetExecutingAssembly().GetTypes()) {
-				var methods = type.GetMethods(flags).Where(m => Attribute.IsDefined(m, typeof(uCommandAttribute)));
-
-				foreach (var method in methods) {
-					var attribute =
-						Attribute.GetCustomAttribute(method, typeof(uCommandAttribute)) as uCommandAttribute;
-
-					string path = "";
-					string tempName = attribute.name.Trim().Split(' ')[0];
-
-					if (ConsoleSettings.Instance.useNamespace) {
-						path = (type.Namespace + "." + tempName).ToLower();
-
-						if (string.IsNullOrEmpty(type.Namespace))
-							path = (type.Name + "." + tempName).ToLower();
-					} else {
-						path = tempName;
-					}
-
-					if (!_commands.ContainsKey(path)) {
-						CommandInfo commandInfo = new CommandInfo(path, attribute.description);
-						Context context = new Context(method);
-
-						_commands.Add(path, new TerminalCommand(commandInfo, context));
-						allCommands.Add(commandInfo);
-
-						if (type.IsSubclassOf(typeof(MonoBehaviour))) {
-							object[] instances = Object
-								.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
-								.Where(m => type.IsAssignableFrom(m.GetType())).ToArray<object>();
-							context.AddTargets(instances);
-						} else if (type.BaseType == null) {
-							object instance = Activator.CreateInstance(type);
-							context.AddTargets(new object[] { instance });
-						}
-					} else {
-						Debug.LogWarning($"The path '{path}' already contains in the list of commands");
-						uTerminalDebug.Log($"The path '{path}' already contains in the list of commands",
-							uTerminalDebug.Color.Orange);
-					}
-				}
+			foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+				SearchForAttributes(assembly);
 			}
 
 			if (ConsoleSettings.Instance.showStartMessage)
@@ -72,6 +31,58 @@ namespace uTerminal {
 
 			if (ConsoleSettings.Instance.showVersion)
 				uTerminalDebug.Log($"uTerminal v{ConsoleSettings.Version}");
+		}
+
+		private static void SearchForAttributes(Assembly assembly) {
+			const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
+
+			foreach (Type type in assembly.GetTypes()) {
+				IEnumerable<MethodInfo> methods = type.GetMethods(flags).Where(m => Attribute.IsDefined(m, typeof(uCommandAttribute)));
+
+				SearchForAttributes(methods, type);
+			}
+		}
+
+		private static void SearchForAttributes(IEnumerable<MethodInfo> methods, Type type) {
+			foreach (MethodInfo method in methods) {
+				uCommandAttribute attribute = Attribute.GetCustomAttribute(method, typeof(uCommandAttribute)) as uCommandAttribute;
+
+				string path = GetCommandPath(attribute, type);
+
+				if (_commands.ContainsKey(path)) {
+					Debug.LogWarning($"The path '{path}' already contains in the list of commands");
+					uTerminalDebug.Log($"The path '{path}' already contains in the list of commands",
+						uTerminalDebug.Color.Orange);
+					continue;
+				}
+
+				CommandInfo commandInfo = new(path, attribute!.description);
+				Context context = new(method);
+
+				_commands.Add(path, new TerminalCommand(commandInfo, context));
+				allCommands.Add(commandInfo);
+
+				if (type.IsSubclassOf(typeof(MonoBehaviour))) {
+					object[] instances = Object
+						.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+						.Where(m => type.IsAssignableFrom(m.GetType())).ToArray<object>();
+					context.AddTargets(instances);
+				} else if (type.BaseType == null) {
+					object instance = Activator.CreateInstance(type);
+					context.AddTargets(new[] { instance });
+				}
+			}
+		}
+
+		private static string GetCommandPath(uCommandAttribute attribute, Type type) {
+			string tempName = attribute.name.Trim().Split(' ')[0];
+
+			if (!ConsoleSettings.Instance.useNamespace)
+				return tempName;
+
+			if (string.IsNullOrEmpty(type.Namespace))
+				return (type.Name + "." + tempName).ToLower();
+			return (type.Namespace + "." + tempName).ToLower();
 		}
 
 		/// <summary>
