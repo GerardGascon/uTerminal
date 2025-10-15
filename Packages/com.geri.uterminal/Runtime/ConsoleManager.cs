@@ -20,6 +20,7 @@ namespace uTerminal {
 
 		public static event Action OnConsoleOpen;
 		public static event Action OnConsoleClose;
+		public static bool IsConsoleVisible { get; private set; }
 
 		/// <summary>
 		/// Gets the static instance of the ConsoleManager.
@@ -76,6 +77,7 @@ namespace uTerminal {
 					OnConsoleOpen?.Invoke();
 				else
 					OnConsoleClose?.Invoke();
+				IsConsoleVisible = _consoleUI.activeSelf;
 
 			}
 #else
