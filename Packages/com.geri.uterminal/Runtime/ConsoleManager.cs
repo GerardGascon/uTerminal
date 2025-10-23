@@ -69,8 +69,7 @@ namespace uTerminal {
 		/// Updates the console UI visibility on key press.
 		/// </summary>
 		public void Update() {
-#if ENABLE_INPUT_SYSTEM
-			if (UnityEngine.InputSystem.Keyboard.current[ConsoleSettings.Instance.openTerminalKey].wasPressedThisFrame && _consoleUI)
+			if (InputAbstraction.OpenKeyDown() && _consoleUI)
 			{
 				_consoleUI.SetActive(!_consoleUI.activeSelf);
 				if (_consoleUI.activeSelf)
@@ -80,11 +79,6 @@ namespace uTerminal {
 				IsConsoleVisible = _consoleUI.activeSelf;
 
 			}
-#else
-			if (Input.GetKeyDown(ConsoleSettings.Instance.openTerminalKey) && _consoleUI) {
-				_consoleUI.SetActive(!_consoleUI.activeSelf);
-			}
-#endif
 		}
 	}
 }
